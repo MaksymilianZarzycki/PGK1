@@ -1,2 +1,2 @@
 # PGK1
-PodstawyGrafikiKomputerowej1
+Podstawy Grafiki Komputerowej 1
