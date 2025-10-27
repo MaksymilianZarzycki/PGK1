@@ -3,6 +3,9 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
 
+#include "primitiveRenderer.h"
+#include "primitives.h"
+
 class Engine
 {
 
@@ -30,6 +33,8 @@ class Engine
 		void input();
 		void update();
 		void render();
+
+        PrimitiveRenderer pRender;
 };
 
 Engine::Engine(bool fullscreen, int width, int height, int fps)
@@ -103,7 +108,6 @@ void Engine::input()
             break;
 
         case ALLEGRO_EVENT_KEY_DOWN:
-            std::cout<<"Input "<<std::endl;
             if(event.keyboard.keycode = ALLEGRO_KEY_ESCAPE)
                 stop=true;
             break;
@@ -114,21 +118,42 @@ void Engine::input()
     }
 }
 
+std::vector<Point2D> points; // <------------------- REMEMBER TO DELETE LATER
 void Engine::update()
 {
+    pRender.alDrawRectangle(20,20,100,100,al_map_rgb(255, 255, 255));
+    pRender.alDrawTriangle(120,20,200,20, 150, 100, al_map_rgb(0, 120, 120));
+    pRender.alDrawCircle(50,50, 10, al_map_rgb(50, 255, 50));
 
+    Point2D pointA(width/2, height/2);
+    Point2D pointB(mouseX, mouseY);
+    LineSegment segment(pointA, pointB);
+    segment.draw(al_map_rgb(255,255,255));
+
+    
+    Point2D* newPoint = new Point2D(mouseX, mouseY);
+    points.push_back(*newPoint);
+
+    if(points.size()>30)
+    {
+        points.erase(points.begin());
+    }
+    pRender.drawBrokenLine(points, al_map_rgb(255,0,0));
 }
 
-void Engine::render()
+/*void Engine::render()
 {
      al_clear_to_color(al_map_rgb(0, 0, 0));
 
-    if (mousePressed) {
-       al_draw_filled_rectangle(mouseX, mouseY, mouseX + 10, mouseY + 10, al_map_rgb(255, 0, 0));
-    }
+    pRender.alDrawRectangle(20,20,100,100,al_map_rgb(255, 255, 255));
+    pRender.alDrawTriangle(120,20,200,20, 150, 100, al_map_rgb(0, 120, 120));
+    pRender.alDrawCircle(50,50, 10, al_map_rgb(50, 255, 50));
+
+
+    //pRender.drawLine(width/2, height/2, mouseX, mouseY, al_map_rgb(255,255,255));
 
     al_flip_display();
-}
+}*/
 
 void Engine::run()
 {
@@ -137,8 +162,10 @@ void Engine::run()
         al_wait_for_event(event_queue, &event);
 
         if (event.type == ALLEGRO_EVENT_TIMER) {
+            al_clear_to_color(al_map_rgb(0, 0, 0));
             update();
-            render();
+            al_flip_display();
+            //render();
         }
         else {
             input();
@@ -148,7 +175,7 @@ void Engine::run()
 
 int main(void)
 {
-    Engine engine;
+    Engine engine(false, 800, 800, 30);
     engine.run();
 
 	return 0;

@@ -1,6 +1,10 @@
-SRC = engine.cpp
+SRC = engine.cpp primitiveRenderer.cpp primitives.cpp
+LIBS = $$(pkg-config allegro-5 allegro_font-5 allegro_primitives-5 --libs --cflags)
 
-all: engineclass
+all: compileEngine
 
-engineclass: $(SRC)
-	g++ -o engine $(SRC) $$(pkg-config allegro-5 allegro_font-5 allegro_primitives-5 --libs --cflags)
+compileEngine: $(SRC)
+	g++ -o engine $(SRC) $(LIBS)
+
+clear:
+	rm *.o
