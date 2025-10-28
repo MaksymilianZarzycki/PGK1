@@ -1,3 +1,4 @@
+#pragma once
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
 
@@ -5,23 +6,23 @@
 
 class Point2D
 {
-    public:
-        Point2D();
-        Point2D(float x, float y);
-        float x;
-        float y;
-        
+public:
+    Point2D();
+    Point2D(float x, float y);
+    float x;
+    float y;
 
-        void draw(ALLEGRO_COLOR color);
+
+    void draw(ALLEGRO_COLOR color);
 };
 
 class LineSegment
 {
-    public:
-        LineSegment();
-        LineSegment(Point2D a, Point2D b);
-        Point2D a;
-        Point2D b;
+public:
+    LineSegment();
+    LineSegment(Point2D a, Point2D b);
+    Point2D a;
+    Point2D b;
 
-        void draw(ALLEGRO_COLOR color);
+    void draw(ALLEGRO_COLOR color);
 };

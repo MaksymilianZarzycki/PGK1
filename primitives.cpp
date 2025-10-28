@@ -20,7 +20,7 @@ Point2D::Point2D(float x, float y)
 void Point2D::draw(ALLEGRO_COLOR color)
 {
     PrimitiveRenderer pRender;
-    pRender.alDrawPoint(x,y,color);
+    pRender.alDrawPoint(x, y, color);
 }
 
 
